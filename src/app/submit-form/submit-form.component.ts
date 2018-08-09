@@ -17,11 +17,11 @@ export class SubmitFormComponent{
   initItemRows() {
     return this._fb.group({
         // list all your form controls here, which belongs to your form array
-        Question:[''] ,
-        correctAnswer:[''] ,
-        incorrectAnswer1: [''] ,
-        incorrectAnswer2: [''] ,
-        incorrectAnswer3: ['']
+        Question:['', Validators.required] ,
+        correctAnswer:['', Validators.required] ,
+        incorrectAnswer1: ['', Validators.required] ,
+        incorrectAnswer2: ['', Validators.required] ,
+        incorrectAnswer3: ['', Validators.required]
     });
 }
 
