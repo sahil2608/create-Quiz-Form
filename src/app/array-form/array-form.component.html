@@ -1,0 +1,31 @@
+<form [formGroup]="myForm">
+
+    Value: {{ myForm.value| json}}
+    <hr>
+    <mat-form-field class="full">
+        <input matInput placeholder="questions" fromControlName="questions">
+    </mat-form-field>
+
+    <mat-form-field class="full">
+        <input matInput placeholder="correctOption" fromControlName="correctOption">
+    </mat-form-field>
+
+    <mat-form-field class="full">
+        <input matInput placeholder="addIncorrectAnswer" fromControlName="incorrectAnswer">
+    </mat-form-field>
+
+
+    <div formArrayName="incorrectAnswers">
+
+        <div *ngFor="let incorrectAnswer of incorrectForms.controls; let i= index" [formGroupName]="i">
+            <mat-form-field class="full">
+                <input matInput placeholder="incorrectAnswer" fromControlName="incorrectAnswer">
+            </mat-form-field>
+            <button mat-raised-button color="warn" (click)="deleteincorrectAnswers(i)">delete Incorrect Answer</button>
+        </div>
+
+    </div>
+
+    <button mat-raised-button color="primary" (click)="addIncorrectAnswer()">Add incorrectAnswer</button>
+
+</form>

@@ -1,0 +1,22 @@
+<form [formGroup]="myForm">
+
+    Value : {{ myForm.value | json}}
+
+    <hr>
+
+    <mat-form-field>
+        <input matInput placeholder="email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Message" formControlName="message">
+    </mat-form-field>
+
+
+    <mat-form-field>
+        <mat-select placeholder="career" formControlName="career">
+        </mat-select>
+    </mat-form-field>
+
+
+</form>
