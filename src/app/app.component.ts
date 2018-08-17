@@ -1,44 +1,63 @@
 import { Component} from '@angular/core';
 import { SubmitFormComponent } from './submit-form/submit-form.component';
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatDialogConfig } from "@angular/material";
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [
+    {
+        provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+    ]
 })
 export class AppComponent {
   CreateQuizForm : FormGroup;
-  constructor(public dialog: MatDialog, private fb: FormBuilder){}
 
+  public date;
+  public now: Date = new Date();
+
+  minDate = this.now;
+  maxDate = new Date(2020, 0, 1);
+
+  constructor(public dialog: MatDialog, private fb: FormBuilder,)
+  { setInterval(() => {
+    this.date = new Date();
+  }, 1);
+}
+openEmojiDialog() {
+ const dialogConfig = new MatDialogConfig();
+ dialogConfig.disableClose = true;
+ const dialogRef = this.dialog.open(SubmitFormComponent,{
+    width: '600px',
+    height: '500px',
+    autoFocus: true
+  });
+  dialogRef.afterClosed().subscribe(
+    data => console.log(data)
+);
+}
   ngOnInit(): void {
   this.CreateQuizForm = this.fb.group({
     QuizName: ['', [Validators.required, Validators.minLength(2)]],
-    noQuestion:['',Validators.required],
-    duration:['',Validators.required] ,
+    noQuestion:['',[Validators.required, Validators.min(5), Validators.max(180), Validators.pattern('[0-9]+[0-9]')]],
+    duration:['',[Validators.required, Validators.min(5), Validators.max(180), Validators.pattern('[0-9]+[0-9]')]] ,
     createdBy:['',Validators.required] ,
     date:['', Validators.required]
   })
-
 }
-
-  openEmojiDialog() {
-    let dialog = this.dialog.open(SubmitFormComponent,{
-      width: '500px',
-      height: '500px'
-    });
-  }
   // onSubmit() {
   //   console.warn(this.profileForm.value);
   // }
-onSubmit(){
-  if(this.CreateQuizForm.valid)
-  {console.log(this.CreateQuizForm.value);}
-  else{
-    console.log("Not Valid details")
+  quizdetails(value){
+  console.log(this.CreateQuizForm.value)
   }
-
-}
 }
 

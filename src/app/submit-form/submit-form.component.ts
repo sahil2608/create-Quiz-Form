@@ -1,5 +1,6 @@
-import { Component} from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { MatDialogRef } from "@angular/material";
 
 @Component({
   selector: 'app-submit-form',
@@ -7,10 +8,12 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
   styleUrls: ['./submit-form.component.css']
 })
 export class SubmitFormComponent{
-  constructor(private _fb: FormBuilder ) { }
-  CreateQuizForm: FormGroup;
+  constructor(private _fb: FormBuilder,  public dialogRef: MatDialogRef<SubmitFormComponent>,) {}
+noquestion : FormGroup;
+  AddQuestionForm: FormGroup;
+  isButtonVisible = false;
   ngOnInit() {
-    this.CreateQuizForm = this._fb.group({
+    this.AddQuestionForm = this._fb.group({
       itemRows: this._fb.array([this.initItemRows()]) // here
     });
   }
@@ -25,60 +28,37 @@ export class SubmitFormComponent{
     });
 }
 
+close() {
+  let data = [];
+  this.AddQuestionForm.value.itemRows.forEach((i) => {
+    data.push({
+      Question: i.Question,
+      correctAnswer: i.correctAnswer,
+      incorrectAnswer: [
+        i.incorrectAnswer1,
+        i.incorrectAnswer2,
+        i.incorrectAnswer3
+      ]
+    });
+  });
+
+  this.dialogRef.close( this.AddQuestionForm.value);
+}
+
 addNewRow() {
   // control refers to your formarray
-  const control = <FormArray>this.CreateQuizForm.controls['itemRows'];
+  const control = <FormArray>this.AddQuestionForm.controls['itemRows'];
   // add new formgroup
   control.push(this.initItemRows());
 }
 
 deleteRow(index: number) {
   // control refers to your formarray
-  const control = <FormArray>this.CreateQuizForm.controls['itemRows'];
+  const control = <FormArray>this.AddQuestionForm.controls['itemRows'];
   // remove the chosen row
   control.removeAt(index);
 }
-
 onSubmit(){
-  console.log(this.CreateQuizForm.value);
+  console.log(this.noquestion.value);
 }
-// CreateQuizForm: FormGroup;
-// items : any[]= [];
-// ngOnInit() {
-//      this.CreateQuizForm = this.fb.group({
-//        items: this.fb.array([ this.createaddQuestion()])
-//      });
-//  }
-
-//  createaddQuestion(): FormGroup {
-//   return this.fb.group({
-// question:'',
-// correctAnswer:'',
-//   incorrectAnswer: ''
-//  });
-// }
-
-// get addQuestions(): FormArray {
-//   return this.CreateQuizForm.get('data') as FormArray;
-// };
-
-// addItem(): void {
-
-//  this.items.push(this.createaddQuestion());
-//  }
-
-
-
-
-// CreateQuizForm = this.fb.group({
-//   Question: '',
-//   correctAnswer:'',
-//   IncorrectAnswer:[''],
-// })
-// onSubmit(){
-//   console.log(this.CreateQuizForm.value);
-// }
-
-
 }
-

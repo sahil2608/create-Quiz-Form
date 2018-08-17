@@ -1,6 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
+import { Component} from '@angular/core';
 
 
 @Component({
@@ -8,36 +7,13 @@ import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
   templateUrl: './array-form.component.html',
   styleUrls: ['./array-form.component.css']
 })
-export class ArrayFormComponent implements OnInit {
+export class ArrayFormComponent{
+  public date;
+  public now: Date = new Date();
 
-  myForm: FormGroup;
-
- constructor(private fb: FormBuilder) { }
-
-  ngOnInit() {
-    this.myForm = this.fb.group({
-    question: '',
-    correctAnswer: '',
-    incorrectAnswers: this.fb.array([])
-  })
-
+  constructor() {
+      setInterval(() => {
+        this.date = new Date();
+      }, 1);
   }
-get incorrectForms(){
-  return this.myForm.get('incorrectAnswers') as FormArray
-}
-
-addIncorrectAnswer(){
-
-  const incorrectAnswers= this.fb.group({
-    incorrectAnswers: []
-
-  })
-
-  this.incorrectForms.push(incorrectAnswers);
-
-}
-
-deleteincorrectAnswers(i){
-  this.incorrectForms.removeAt(i);
-}
 }

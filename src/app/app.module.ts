@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { MatChipsModule } from '@angular/material/chips';
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,MatTooltipModule,
     BrowserAnimationsModule,
     MatInputModule,
      MatSelectModule,

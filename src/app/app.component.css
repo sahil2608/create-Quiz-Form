@@ -20,12 +20,6 @@
     width: 100%;
 }
 
-
-/* .mat-button,
-.mat-raised-button {
-    background-color: green;
-} */
-
 .example-button-row {
     display: flex;
     align-items: center;
@@ -40,4 +34,9 @@
 
 .top {
     padding-top: 30px;
+}
+
+.mat-raised-button {
+    background-color: blue;
+    color: beige;
 }
