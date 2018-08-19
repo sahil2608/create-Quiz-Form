@@ -1,6 +1,7 @@
 import { Component, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialogRef } from "@angular/material";
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-submit-form',
@@ -8,10 +9,12 @@ import { MatDialogRef } from "@angular/material";
   styleUrls: ['./submit-form.component.css']
 })
 export class SubmitFormComponent{
-  constructor(private _fb: FormBuilder,  public dialogRef: MatDialogRef<SubmitFormComponent>,) {}
+  constructor(private _fb: FormBuilder,  public dialogRef: MatDialogRef<SubmitFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 noquestion : FormGroup;
   AddQuestionForm: FormGroup;
   isButtonVisible = false;
+
   ngOnInit() {
     this.AddQuestionForm = this._fb.group({
       itemRows: this._fb.array([this.initItemRows()]) // here

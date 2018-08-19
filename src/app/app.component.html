@@ -34,11 +34,14 @@
                 <mat-form-field class="example-full-width">
                     <input matInput formControlName="createdBy" placeholder="Created By">
                 </mat-form-field>
-                <!-- Add Question button -->
-                <button mat-raised-button class="btn btn-info btn-block my-4" (click)="openEmojiDialog()" type="button">Add Question</button>
+                <!-- Add Question button *******************function***************** -->
+                <button mat-raised-button class="btn btn-info btn-block my-4" (click)="disableAll()" (click)="openEmojiDialog()" type="submit">Add Question</button>
 
-                <!-- Submit button -->
-                <button mat-raised-button matTooltip="Enter the questions for test" aria-label="Button that displays a tooltip when focused or hovered over" class="btn btn-info btn-block my-4" [disabled]="!CreateQuizForm.valid" type="submit">Submit</button>
+                <!-- Submit button ***************and********* -->
+                <button mat-raised-button matTooltip="Enter the questions for test" 
+                aria-label="Button that displays a tooltip when focused or hovered over" 
+                class="btn btn-info btn-block my-4" 
+                [disabled]="!CreateQuizForm.valid && disable" type="submit">Submit</button>
             </form>
         </div>
         <div class="col-3">
